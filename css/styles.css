@@ -1,0 +1,152 @@
+html, body{
+    height: 100%;
+}
+body{
+    background-color: #aaa;
+    font-family: sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+h1, h2, h3{
+    padding: 20px 0 10px;
+    font-weight: 900;
+}
+h1{
+    font-size: 38px;
+}
+h2{
+    font-size: 26px;
+}
+p{
+    padding: 10px;
+}
+
+.contentor{
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 52px auto 120px;
+}
+.site_footer{
+    background-color: #333;
+}
+nav{
+    width: 100%;
+    background-color: #333;
+}
+.wrapper{
+    display: block;
+    box-sizing: border-box;
+    width:80%;
+    margin: 0 auto;
+    background-color: #ccc;
+    padding: 20px;
+}
+
+nav .wrapper{
+    display: flex;
+    align-items: stretch;
+    background-color: #333;
+    padding: 0;
+}
+.logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #fff;
+}
+
+.logo h2{
+    margin: 0;
+    padding: 0;
+}
+.logo #imglogo{
+    width: 32px;
+    margin: 10px;
+    float: left;
+}
+/*#imglogo rect{
+    stroke: red !important;
+}*/
+
+.menu{
+    flex-grow: 1; /* relativo a nav .wrapper */
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.menu li{
+    /*flex-grow: 1;*/
+    display: flex;
+    align-items: stretch;
+    /*background-color: #aaa;*/
+}
+.menu .link, .menu .activelink{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+.menu .activelink{
+    background-color: #999;
+    color: #333;
+}
+.menu .link:hover{
+    background-color: #666;
+}
+
+.index-categories-lists{
+    display: flex;
+    gap: 10px;
+}
+.index-categories-lists li{
+    display: flex;
+    height: 160px;
+    width: 25%;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #333;
+    color: #cccccc;
+}
+/* FORMULARIOS */
+.login{
+    width: 320px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #aaa;
+}
+.input_field, fieldset{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+.input_field label{
+    text-align: right;
+    flex-grow: 1;
+}
+
+.submit{
+    border: none;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+
+.form_error{
+    border: 2px solid darkorange;
+}
+.lista_erros{
+    padding: 0 20px;
+}
+.lista_erros li:first-child{
+    font-weight: bold;
+}
+.lista_erros li{
+    margin: 5px 0;
+}
