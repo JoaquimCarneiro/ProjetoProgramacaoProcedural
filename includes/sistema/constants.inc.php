@@ -19,11 +19,12 @@ const HIDE_CREDENCIALS = false;
 
 /* SMTP EMAIL CONSTANTS */
 
+const SMTP_PORT = 25;
+// const SMTP_HOST = '';
+// const SMTP_USERNAME = '';
+// const SMTP_PASS = '';
+
+/* OVERRIDDEN CONSTANTS */
 if(file_exists(__DIR__."/secrets.php")){
     require __DIR__."/secrets.php";
-}else{
-    define('SMTP_HOST', '');
-    define('SMTP_USERNAME', '');
-    define('SMTP_PASS', '');
 }
-const SMTP_PORT = 25;

@@ -27,7 +27,8 @@ function uidExists($conn, $username, $email){
 
 }
 
-/* Criar utilizador */
+/* Criar utilizador
+ * Esta função precisa de devolver valores caso falhe */
 function createUser($conn, $name, $username, $email, $password): void{
     $sql = "INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) VALUES (?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
@@ -41,7 +42,4 @@ function createUser($conn, $name, $username, $email, $password): void{
     mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $username, $hashedPassword);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-
-    /*header("location: ".SITE_ROOT);
-    exit();*/
 }

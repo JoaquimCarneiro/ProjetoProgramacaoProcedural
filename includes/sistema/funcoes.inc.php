@@ -8,7 +8,7 @@ function menu_link($pagina_atual, $nome, $link): void{
     if($pagina_atual == $link){
         echo "<span class='activelink'>$nome</span>";
     }else{
-        echo "<a class='link' href='?pag=$link'>$nome</a>";
+        echo "<a class='link' href='/".$link."/'>$nome</a>";
     }
     echo "</li>";
 }

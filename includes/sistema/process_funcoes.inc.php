@@ -53,7 +53,7 @@ function processLogin($username, $password, $conn):array {
             session_start();
             $_SESSION['userId'] = $uidExists["usersId"];
             $_SESSION['userUid'] = $uidExists["usersUid"];
-
+            header("location: ".SITE_ROOT);
         }
     }
 
@@ -120,11 +120,19 @@ function processRegister($name, $username, $email, $password, $password_repeat, 
             $form_error['userexists'] = "Utilizador/Email já existe";
             $num_error++;
         }else{
-            //echo "registo ok";
-            $form_error["email"] = envia_email("<h1>EXEMPlo</h1>");
-
+            //Cria utilizador
             createUser($conn, $name, $username, $email, $password);
 
+            /* Variaveis para o email */
+            $assunto = "Novo registo no site ".SITE_TITLE;
+            $emailregisto = conteudo_email_registo();
+
+            /* remetente e nome de remetente tem que ser modificados*/
+            envia_email(SMTP_USERNAME, SITE_TITLE,
+                        $email, $username,
+                        $assunto, $emailregisto['html'], $emailregisto['txt']);
+
+            header("location: ".SITE_ROOT);
         }
     }
 

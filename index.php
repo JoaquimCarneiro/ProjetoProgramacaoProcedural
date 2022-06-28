@@ -5,6 +5,13 @@
     $paginas = ["home", "login", "register", "about", "blog", "logout"];
     if(isset($_GET['pag'])){
         $pagina_atual = $_GET['pag'];
+        if (empty($pagina_atual)){
+            $pagina_atual = 'home';
+        }else{
+            if($pagina_atual[-1] == '/'){
+                $pagina_atual = substr($pagina_atual, 0, -1);
+            }
+        }
         /* se página for um formulário incluir o script de processamento de formulários
          *  - Processa formulários e devolve erros/mensagems */
         if(($pagina_atual == 'login' || $pagina_atual == 'register') && isset($_POST['submit'])){

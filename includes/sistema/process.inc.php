@@ -13,7 +13,6 @@
 
             /* Processar campos formulário de login */
             $form_error = processLogin($username, $password, $conn);
-            header("location: ".SITE_ROOT);
 
         }elseif ($_POST['submit'] == 'register'){
             //echo "hello is it me you are looking for";
@@ -25,7 +24,7 @@
             $password_repeat = $_POST['password_repeat'];
 
             $form_error = processRegister($name, $username, $email, $password, $password_repeat, $conn);
-            header("location: ".SITE_ROOT);
+
 
         }else{
             header("location: ".SITE_ROOT."?error=illegalaccess");
