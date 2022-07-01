@@ -13,18 +13,22 @@ const DB_USER = "verysafeuser";
 const DB_PWD = "verysafepassword";
 const DB_NAME = "loginsysproc";
 
-/* FORM CONSTANTS */
+/* LOGIN CONSTANTS */
+const HIDE_CREDENCIALS = false; //defeito false
 
-const HIDE_CREDENCIALS = false;
+/* REGISTER CONSTANTS */
+const REGISTER_SEND_EMAIL = false; //defeito true
 
 /* SMTP EMAIL CONSTANTS */
-
 const SMTP_PORT = 25;
 // const SMTP_HOST = '';
 // const SMTP_USERNAME = '';
 // const SMTP_PASS = '';
 
-/* OVERRIDDEN CONSTANTS */
+
+
+
+/***** OVERRIDDEN CONSTANTS *****/
 if(file_exists(__DIR__."/secrets.php")){
     require __DIR__."/secrets.php";
 }

@@ -1,13 +1,6 @@
 <div class="login">
     <h2>Registar</h2>
-    <form action="?pag=register" method="post">
-        <fieldset class="input_field">
-            <label for="login_name">Nome completo</label>
-            <input class=
-                   ' <?php if(isset($form_error['completename'])) {echo " form_error";}?> '
-                    type="text" id="login_name" name="completename" placeholder="Nome completo" value=
-                   '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['completename'];}?>'>
-        </fieldset>
+    <form action="/register/" method="post">
         <fieldset class="input_field">
             <label for="login_user">Utilizador</label>
             <input class=

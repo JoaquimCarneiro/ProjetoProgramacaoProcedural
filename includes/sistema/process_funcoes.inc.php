@@ -53,6 +53,7 @@ function processLogin($username, $password, $conn):array {
             session_start();
             $_SESSION['userId'] = $uidExists["usersId"];
             $_SESSION['userUid'] = $uidExists["usersUid"];
+            $_SESSION['userLvl'] = $uidExists["userlevel"];
             header("location: ".SITE_ROOT);
         }
     }
@@ -66,17 +67,17 @@ function processLogin($username, $password, $conn):array {
 }
 
 /* Processa campos do formulário register e cria novo registo */
-function processRegister($name, $username, $email, $password, $password_repeat, $conn):array{
+function processRegister($username, $email, $password, $password_repeat, $conn):array{
     $form_error = [];
     $num_error = 0;
 
     /***** Verificações *****/
     /* Nome Inteiro do utilizador - só necessita de ser verificado se não está vazio
      * (campo a ser removido do formulário de registo) */
-    if (empty($name)){
+    /*if (empty($name)){
         $form_error['completename'] = "Nome de utilizador obrigatório";
         $num_error++;
-    }
+    }*/
 
     /* Utilizador */
     if (empty($username)){
@@ -120,17 +121,19 @@ function processRegister($name, $username, $email, $password, $password_repeat, 
             $form_error['userexists'] = "Utilizador/Email já existe";
             $num_error++;
         }else{
-            //Cria utilizador
-            createUser($conn, $name, $username, $email, $password);
+            //Cria utilizador - falta fazer um try/catch para que em caso de erro devolva o mes em vez de quebrar o script
+            createUser($conn, $username, $email, $password);
+            /* envia email - falta fazer verificação de que o email foi enviado*/
+            if (REGISTER_SEND_EMAIL){
+                /* Variaveis para o email */
+                $assunto = "Novo registo no site ".SITE_TITLE;
+                $emailregisto = conteudo_email_registo();
 
-            /* Variaveis para o email */
-            $assunto = "Novo registo no site ".SITE_TITLE;
-            $emailregisto = conteudo_email_registo();
-
-            /* remetente e nome de remetente tem que ser modificados*/
-            envia_email(SMTP_USERNAME, SITE_TITLE,
-                        $email, $username,
-                        $assunto, $emailregisto['html'], $emailregisto['txt']);
+                /* remetente e nome de remetente tem que ser modificados*/
+                envia_email(SMTP_USERNAME, SITE_TITLE,
+                    $email, $username,
+                    $assunto, $emailregisto['html'], $emailregisto['txt']);
+            }
 
             header("location: ".SITE_ROOT);
         }
@@ -140,7 +143,6 @@ function processRegister($name, $username, $email, $password, $password_repeat, 
     if ($num_error != 0){
         //$name, $username, $email, $password, $password_repeat
         $form_error['originais'] = [
-            'completename' => $name,
             'username' => $username,
             'email' => $email,
             'password' => $password,

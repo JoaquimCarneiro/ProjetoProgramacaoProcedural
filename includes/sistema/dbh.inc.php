@@ -29,8 +29,9 @@ function uidExists($conn, $username, $email){
 
 /* Criar utilizador
  * Esta função precisa de devolver valores caso falhe */
-function createUser($conn, $name, $username, $email, $password): void{
-    $sql = "INSERT INTO users (usersName, usersEmail, usersUid, usersPwd) VALUES (?, ?, ?, ?);";
+function createUser($conn, $username, $email, $password): void{
+    $userlevel = 1; //nível de utilizador por defeito no registo
+    $sql = "INSERT INTO users ( usersEmail, usersUid, usersPwd, userlevel) VALUES (?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)){
         header("location: ".SITE_ROOT."?error=stmtfailed");
@@ -39,7 +40,7 @@ function createUser($conn, $name, $username, $email, $password): void{
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $username, $hashedPassword);
+    mysqli_stmt_bind_param($stmt, "ssss", $email, $username, $hashedPassword, $userlevel);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }

@@ -1,6 +1,6 @@
 <div class="login">
     <h2>Entrar</h2>
-    <form action="?pag=login" method="post">
+    <form action="/login/" method="post">
         <fieldset class="input_field">
             <label for="login_user">Utilizador</label>
             <input class=

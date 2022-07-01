@@ -13,3 +13,10 @@ function menu_link($pagina_atual, $nome, $link): void{
     echo "</li>";
 }
 
+function debug($activo, $vars){
+    if($activo){
+        echo "<pre>";
+        print_r($vars);
+        echo "</pre>";
+    }
+}
