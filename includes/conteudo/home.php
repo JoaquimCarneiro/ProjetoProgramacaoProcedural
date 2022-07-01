@@ -4,6 +4,7 @@
     <p><?php if(isset($message)){
         echo $message;
         } ?></p>
+    <p>Sessão</p>
     <p><?php debug(true, $_SESSION); ?></p>
 </section>
 

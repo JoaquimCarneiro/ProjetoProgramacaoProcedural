@@ -17,7 +17,7 @@ const DB_NAME = "loginsysproc";
 const HIDE_CREDENCIALS = false; //defeito false
 
 /* REGISTER CONSTANTS */
-const REGISTER_SEND_EMAIL = false; //defeito true
+const REGISTER_SEND_EMAIL = true; //defeito true
 
 /* SMTP EMAIL CONSTANTS */
 const SMTP_PORT = 25;
