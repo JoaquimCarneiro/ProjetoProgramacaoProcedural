@@ -45,3 +45,33 @@ function createUser($conn, $username, $email, $password): void{
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
+
+/* Apagar tokens se existir */
+function deleteTokenUser($conn, $email): void{
+    $sql = "DELETE FROM tokens WHERE email = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        /* precisa de melhor formato de erro */
+        echo "erro a preparar a query DELETE";
+        exit();
+    }else{
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+    }
+}
+
+/* inserir token */
+function addToken($conn, $email, $token_selector, $token, $expires):void{
+    $sql = "INSERT INTO tokens (email, tokenSelector, token, expires) VALUES (?, ?, ?, ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        /* precisa de melhor formato de erro */
+        echo "erro a preparar a query INSERT";
+        exit();
+    }else{
+        /* encriptar token */
+        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+        mysqli_stmt_bind_param($stmt, "ssss", $email, $token_selector, $hashedToken, $expires);
+        mysqli_stmt_execute($stmt);
+    }
+}

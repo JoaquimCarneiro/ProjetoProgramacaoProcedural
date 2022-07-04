@@ -1,6 +1,8 @@
 <?php
-/* Processar campos do formulário de login devolve um array com o número de erros e campos de erro
- * Devolve sempre o numero de erros nem que este seja zero -> $form_error['num_error'] */
+/**********************************************************************************************************************
+ * Processar campos do formulário de login devolve um array com o número de erros e campos de erro                    *
+ * Devolve sempre o numero de erros nem que este seja zero -> $form_error['num_error']                                *
+ **********************************************************************************************************************/
 function processLogin($username, $password, $conn):array {
     /* atribuir campos */
     /* variaveis de erro */
@@ -66,7 +68,9 @@ function processLogin($username, $password, $conn):array {
     return $form_error;
 }
 
-/* Processa campos do formulário register e cria novo registo */
+/**************************************************************
+ * Processa campos do formulário register e cria novo registo *
+ **************************************************************/
 function processRegister($username, $email, $password, $password_repeat, $conn):array{
     $form_error = [];
     $num_error = 0;
@@ -152,6 +156,83 @@ function processRegister($username, $email, $password, $password_repeat, $conn):
     $form_error['num_error'] = $num_error;
     return $form_error;
 }
+/**************************************************************
+ * Processa campos do formulário recover                      *
+ * - cria tokens para verificação de identidade               *
+ * - envia email com link de recuperação                      *
+ **************************************************************/
+function processRecover($conn, $username):array{
+    $form_error = [];
+    $num_error = 0;
+
+    /* credenciais: apesar de se chamar username os dados podem ser utilizador ou email*/
+    //$username = $_POST['username'];
+
+    /* verificar se campo não está vazio */
+    if (empty($username)){
+        $form_error['username'] = "Utilizador obrigatório";
+        $num_error++;
+        /* se campo não estiver vazio porcurar utilizador na base de dados e devolver dados */
+    }else if (!$uidExists = uidExists($conn, $username, $username)){
+        $form_error['username'] = "Utilizador não existe";
+        $num_error ++;
+    }
+
+    if ($num_error == 0){
+        /* Cria um token em binário e cria uma string em hexadecimal para poder ser utilizada num URL
+         * random_bytes pede um try catch
+         * */
+        $token_selector = bin2hex(random_bytes(8));
+        $token = random_bytes(32);
+
+        /* Link contendo os tokens */
+        $url = SITE_ROOT."reset/".$token_selector."/".bin2hex($token)."/";
+
+        /* data de expiração dos tokens - data em formato UNIX + 1 hora*/
+        $expires = date("U") + 1800;
+
+        /* email e nome do utilizador */
+        $email = $uidExists['usersEmail'];
+        $userId = $uidExists['usersUid'];
+
+        /* Limpa tokens na BD */
+        deleteTokenUser($conn, $email);
+
+        /* adiciona tokens á BD*/
+        addToken($conn, $email, $token_selector, $token, $expires);
+
+        /* ENVIA EMAIL */
+        /* assunto */
+        $assunto = "Recuperação de password no site ".SITE_TITLE;
+        /* mensagem --> tem que ser feita função para formatar texto */
+        $mensagem['html'] = "<p>Foi feito um pedido de recuperação para a sua conta, siga o link abaixo para criar uma nova password.</p>";
+        $mensagem['html'] .= "<a href='".$url."'>".$url."</a>";
+        $mensagem['txt'] = "Copie o seguinte link para criar uma nova password\n".$url;
+
+        envia_email(SMTP_USERNAME, SITE_TITLE,
+            $email, $userId,
+            $assunto, $mensagem['html'], $mensagem['txt']);
+    }
+    $form_error['num_error'] = $num_error;
+    return $form_error;
+}
+
+/*****
+ * Process reset
+ * ATENÇÃO: o $urlist é um array de elementos obtidos a partir do url e criado no index.php atravéz da função manageUrl()
+ * este url tem como index 0 oendereço da página (neste caso 'reset') e
+ * pressupostamente o index 1 será o selector e o index 2 será o token
+ *****/
+function processReset($conn, $password, $password_confirm, $urlList):array{
+    $form_error = [];
+    $num_error = 0;
+
+    /**/
+
+    $form_error['num_error'] = $num_error;
+    return $form_error;
+}
+
 
 /* Verificação de campos */
 function invalidUid($username): bool{
