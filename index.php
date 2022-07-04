@@ -3,7 +3,7 @@
     session_start();
     require_once "includes/sistema/constants.inc.php";
     include_once "includes/sistema/funcoes.inc.php";
-    $paginas = ["home", "login", "register", "logout", "recover", "reset", "about", "blog"];
+    $paginas = ["home", "login", "register", "recover", "reset", "confirm", "logout", "about", "blog"];
 
     //array com categorias e página do site a partir do get
     $urlList = manageUrl();
@@ -30,6 +30,10 @@
         session_unset();
         session_destroy();
         header("location:".SITE_ROOT);
+    }
+    /* Confirm User */
+    if($pagina_atual == "confirm"){
+        include "includes/sistema/confirm_process.inc.php";
     }
 
     /* cabeçalho HTML */

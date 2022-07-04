@@ -1,8 +1,8 @@
 <?php
-/**********************************************************************************************************************
- * Processar campos do formulário de login devolve um array com o número de erros e campos de erro                    *
- * Devolve sempre o numero de erros nem que este seja zero -> $form_error['num_error']                                *
- **********************************************************************************************************************/
+/****************************************************************************************************
+ * Processar campos do formulário de login devolve um array com o número de erros e campos de erro. *
+ * Devolve sempre o numero de erros nem que este seja zero -> $form_error['num_error']              *
+ ****************************************************************************************************/
 function processLogin($username, $password, $conn):array {
     /* atribuir campos */
     /* variaveis de erro */
@@ -129,9 +129,35 @@ function processRegister($username, $email, $password, $password_repeat, $conn):
             createUser($conn, $username, $email, $password);
             /* envia email - falta fazer verificação de que o email foi enviado*/
             if (REGISTER_SEND_EMAIL){
+                /* tokens e link */
+                /* Cria um token em binário e cria uma string em hexadecimal para poder ser utilizada num URL
+                 * random_bytes pede um try catch
+                 * */
+                $token_selector = bin2hex(random_bytes(8));
+                $token = random_bytes(32);
+
+                /* Link contendo os tokens */
+                $url = SITE_ROOT."confirm/".$token_selector."/".bin2hex($token)."/";
+
+                /* data de expiração dos tokens - data em formato UNIX + 1 hora*/
+                $expires = date("U") + 18000;
+
+                /* tipo de token, neste caso recover. identifica onde foi gerado o token */
+                $type = "register";
+
+                /* Limpa tokens na BD */
+                deleteTokenUser($conn, $email, "register");
+
+                /* adiciona tokens á BD*/
+                addToken($conn, $email, $token_selector, $token, $expires, $type);
+
                 /* Variaveis para o email */
                 $assunto = "Novo registo no site ".SITE_TITLE;
-                $emailregisto = conteudo_email_registo();
+                $mensagem_html = "<p>Bem vindo ao site ".SITE_TITLE."! Acabou de fazer o seu registo. Para concluir o processo siga ou copie o link abaixo:</p>";
+                $mensagem_html .= "<a href='".$url."'>".$url."</a>";
+                $mensagem_txt = "Bem vindo ao site ".SITE_TITLE."! Acabou de fazer o seu registo. Para concluir o processo siga ou copie o link abaixo:\n";
+                $mensagem_txt .= "$url";
+                $emailregisto = conteudo_email($assunto, $mensagem_html, $mensagem_txt);
 
                 /* remetente e nome de remetente tem que ser modificados*/
                 envia_email(SMTP_USERNAME, SITE_TITLE,
@@ -189,17 +215,20 @@ function processRecover($conn, $username):array{
         $url = SITE_ROOT."reset/".$token_selector."/".bin2hex($token)."/";
 
         /* data de expiração dos tokens - data em formato UNIX + 1 hora*/
-        $expires = date("U") + 1800;
+        $expires = date("U") + 18000;
+
+        /* tipo de token, neste caso recover. identifica onde foi gerado o token */
+        $type = "recover";
 
         /* email e nome do utilizador */
         $email = $uidExists['usersEmail'];
         $userId = $uidExists['usersUid'];
 
         /* Limpa tokens na BD */
-        deleteTokenUser($conn, $email);
+        deleteTokenUser($conn, $email, "recover");
 
         /* adiciona tokens á BD*/
-        addToken($conn, $email, $token_selector, $token, $expires);
+        addToken($conn, $email, $token_selector, $token, $expires, $type);
 
         /* ENVIA EMAIL */
         /* assunto */
@@ -212,6 +241,8 @@ function processRecover($conn, $username):array{
         envia_email(SMTP_USERNAME, SITE_TITLE,
             $email, $userId,
             $assunto, $mensagem['html'], $mensagem['txt']);
+
+        header("location: ".SITE_ROOT);
     }
     $form_error['num_error'] = $num_error;
     return $form_error;
@@ -227,8 +258,90 @@ function processReset($conn, $password, $password_confirm, $urlList):array{
     $form_error = [];
     $num_error = 0;
 
-    /**/
+    /* Verificar campos do formulário */
+    /* verificar se campos estã vazios */
+    if (empty($password)){
+        $form_error['password'] = "Password obrigatória";
+        $num_error++;
+    }
+    if (empty($password_confirm)){
+        $form_error['confirm_password'] = "Confirmação de password obrigatória";
+        $num_error++;
+    }
+    /* só verificar validade dos campos se os campos não estiverem vazios */
+    if($num_error == 0){
+        /* comparar password e verificação */
+        if ($password != $password_confirm){
+            $form_error['password_confirmation'] = "Passwords não são iguais";
+            $num_error++;
+        }
+    }
+    /* So executa se campos forem totalmens validados */
+    if ($num_error == 0){
+        /* selector e token do url */
+        $selector = $urlList[1];
+        $token = $urlList[2];
 
+        /* data actual em formato unix */
+        $currentDate = date("U");
+
+        /* Verificar se token existe na base de dados e devolve array com dados */
+        $getToken = getTokenInfo($conn, $selector, $currentDate);
+        if (isset($getToken['erro'])){
+            $form_error['token_error'] = $getToken['erro'];
+            $num_error++;
+        }else{
+            /* comparar o token com o token na base de dados*/
+            /* o token tem que se do tipo recover */
+            $tokenType = "recover";
+            if($getToken['type'] != $tokenType){
+                $form_error['token_error'] = "Tipo de token invalido.";
+                $num_error++;
+            }else{
+                /* converter o token de volta para binário */
+                $tokenbin = hex2bin($token);
+                /* comparar tokens (url x BD) */
+                $verificaToken = password_verify($tokenbin, $getToken['token']);
+                if (!$verificaToken){
+                    $form_error['token_error'] =  "Tokens inválidos.";
+                    $num_error++;
+                }else{
+                    $email = $getToken['email'];
+                }
+            }
+        }
+
+        /* Verificar que utilizador (email) existe na base de dados
+         * Esta verificação não me parece necessária, de quelquer maneira...
+         * Só executa se não existir nenhum erro */
+        if ($num_error == 0){
+            $getUser = uidExists($conn, $email, $email);
+            if (!$getUser){//uidExiste devolve false ou o array com os dados do utilizador
+                $form_error['user_error'] = "Utilizador não existe";
+                $num_error++;
+            }
+        }
+        /* */
+        if ($num_error == 0){
+            $updatePwd = updatePwdByEmail($conn, $password, $email);
+            if (isset($updatePwd['erro'])){
+                $form_error['user_error'] = "Erro ao modificar password";
+                $num_error++;
+            }
+        }
+
+        /* apagagar token */
+        if ($num_error == 0){
+            deleteTokenUser($conn, $email, $tokenType);
+        }
+
+    }
+
+    if ($num_error == 0){
+        header("location: ".SITE_ROOT);
+    }
+    $form_error['originais']['password'] = $password;
+    $form_error['originais']['confirm_password'] = $password_confirm;
     $form_error['num_error'] = $num_error;
     return $form_error;
 }

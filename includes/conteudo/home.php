@@ -6,6 +6,10 @@
         } ?></p>
     <p>Sessão</p>
     <p><?php debug(true, $_SESSION); ?></p>
+    <?php
+        if(isset($mensagens)){print_r($mensagens);}
+        if(isset($error_msg)){print_r($error_msg);}
+    ?>
 </section>
 
 <section class="index-categories">

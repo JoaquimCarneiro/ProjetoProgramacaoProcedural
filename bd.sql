@@ -22,7 +22,8 @@ CREATE TABLE tokens(
     email varchar(128) NOT NULL,
     tokenSelector TEXT NOT NULL,
     token LONGTEXT NOT NULL,
-    expires TEXT NOT NULL
+    expires TEXT NOT NULL,
+    type varchar(128) NOT NULL
 );
 
 -- ligação de tabelas

@@ -48,31 +48,76 @@ function envia_email(   $remetente, $nome_remetente,
     return $msg;
 }
 
-/* Cria mensagens para o email de registo */
-function conteudo_email_registo():array{
+/* Cria mensagens para o email */
+function conteudo_email($titulo, $mensagem_html, $mensagem_txt):array{
     $email_registo = [];
 
-    $email_registo['html'] = "
-<!DOCTYPE html>
+    $email_registo['html'] = "<!DOCTYPE html>
 <html lang='en'>
     <head>
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-        <title>Email de confirmação de registo</title>
+        <title>$titulo</title>
+        <style>
+            html, body{
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 11px;
+                height: 100%;
+                margin: 0;
+            }
+            .wraper{
+                min-height: 100%;
+                display: grid;
+                grid-template-rows: 60px auto 60px;
+                margin: 0 auto;
+            }
+            .logo{
+                background-color: #333;
+                padding: 10px;
+            }
+            .logo a{
+                display: flex;
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .logo img{
+                display:block;
+                height: 40px;
+                
+            }
+            .logo h1{
+                font-size: 40px;
+                margin: 0 10px;
+                color: darkorange;
+            }
+            .conteudo{
+                padding: 10px;
+                background-color: #ddd;
+            }
+            .footer{
+                background-color: #333;
+            }
+        </style>
     </head>
     <body>
-        <div style='width: 640px; font-family: Arial, Helvetica, sans-serif; font-size: 11px;'>
-            <a href='".SITE_ROOT."'>
-                <img style='margin-right: 10px;' src='imgs/logo.png' height='80' width='80' alt='Logo'>
-                <h1 style='display: inline-block; font-size: 80px; color: darkorange;'>".SITE_TITLE."</h1>
-            </a>
-            <h1>This is a test of PHPMailer.</h1>
-            <p>local onde irá estar o link de confirmação</p>
+        <div class='wraper'>
+            <div class='logo'>
+                <a href=''>
+                    <img src='imgs/logo.png' alt='Logo'>
+                    <h1>LoginSys</h1>
+                </a>
+            </div>
+            <div class='conteudo'>
+                <h1>$titulo</h1>
+                $mensagem_html
+            </div>
+            <div class='footer'></div>
         </div>
     </body>
 </html>
-    ";
+";
 
-    $email_registo['txt'] = "Email de confirmação de registo\n futuro link de confirmação de registo";
+    $email_registo['txt'] = $titulo."\n".$mensagem_txt;
 
     return $email_registo;
 }

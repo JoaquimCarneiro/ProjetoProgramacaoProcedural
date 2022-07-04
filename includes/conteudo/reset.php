@@ -1,5 +1,5 @@
 <?php
-    /* o script em que ter pelo menos duas variaveis: os tokens enviados por email.
+    /* o script tem que ter pelo menos duas variaveis: os tokens enviados por email.
      * caso estas não existam, o "utilizador" chegou aqui de forma ilegal
      * e tem que ser redireccionado */
     if (!empty($urlList[1]) || !empty($urlList[2])){
@@ -9,7 +9,7 @@
         $selector = $urlList[1];
         $token = $urlList[2];
         if (!ctype_xdigit($selector) || !ctype_xdigit($token)){
-            echo "não exadecimal";
+            header("location: ".SITE_ROOT."?error=invalidFormat");
         }else{
 ?>
             <div class="login">
@@ -18,16 +18,16 @@
                     <fieldset class="input_field">
                         <label for="password">Password</label>
                         <input class=
-                               ' <?php if(isset($form_error['username'])) {echo " form_error";}?> '
+                               ' <?php if(isset($form_error['password'])) {echo " form_error";}?> '
                                type="password" id="password" name="password" placeholder="Nova password" value=
-                               '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['username'];}?>'>
+                               '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['password'];}?>'>
                     </fieldset>
                     <fieldset class="input_field">
                         <label for="confirm_password">Confirmar Password</label>
                         <input class=
-                               ' <?php if(isset($form_error['username'])) {echo " form_error";}?> '
+                               ' <?php if(isset($form_error['confirm_password'])) {echo " form_error";}?> '
                                type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar password" value=
-                               '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['username'];}?>'>
+                               '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['confirm_password'];}?>'>
                     </fieldset>
                     <fieldset>
                         <button class="submit" name="submit" value="reset">Recuperar</button>
@@ -38,18 +38,13 @@
                 if(isset($form_error) && $form_error['num_error'] != 0){
                     echo "<p>O formulário tem ".$form_error['num_error']." erros.</p>";
                     echo "<ul class='lista_erros'>";
-                    if(isset($form_error['credenciais'])){
-                        echo "<li>".$form_error['credenciais']."</li>";
-                        if (!HIDE_CREDENCIALS){
-                            if (isset($form_error['username'])){echo "<li>".$form_error['username']."</li>";}
-                            if (isset($form_error['password'])){echo "<li>".$form_error['password']."</li>";}
-                        }
-                    }else{
-                        echo "<li>Campos inválidos</li>";
-                        if (isset($form_error['password'])){echo "<li>".$form_error['password']."</li>";}
-                        if (isset($form_error['confirm_password'])){echo "<li>".$form_error['confirm_password']."</li>";}
-                    }
+                    echo "<li>Campos inválidos</li>";
+                    if (isset($form_error['password'])){echo "<li>".$form_error['password']."</li>";}
+                    if (isset($form_error['confirm_password'])){echo "<li>".$form_error['confirm_password']."</li>";}
+                    if (isset($form_error['password_confirmation'])){echo "<li>".$form_error['password_confirmation']."</li>";}
+                    if (isset($form_error['token_error'])){echo "<li>".$form_error['token_error']."</li>";}
                     echo "</ul>";
+
                 }
                 ?>
             </div>
@@ -57,6 +52,6 @@
         }
     }else{
         //sai daqui
-        echo "erro";
+        header("location: ".SITE_ROOT."?error=illegalaccess");
     }
 ?>
