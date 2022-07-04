@@ -23,7 +23,7 @@
                    '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['password'];}?>'>
         </fieldset>
         <fieldset class="input_field">
-            <label for="login_pwd">Repetir Password</label>
+            <label for="login_pwd_repeat">Repetir Password</label>
             <input
                     class=
                     ' <?php if(isset($form_error['password_repeat'])) {echo " form_error";}?> '

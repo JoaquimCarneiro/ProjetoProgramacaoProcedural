@@ -2,32 +2,35 @@
     /* incluir funções, determinar página e processar formulários */
     session_start();
     require_once "includes/sistema/constants.inc.php";
-    $paginas = ["home", "login", "register", "about", "blog", "logout"];
-    if(isset($_GET['pag'])){
-        $pagina_atual = $_GET['pag'];
-        if (empty($pagina_atual)){
-            $pagina_atual = 'home';
-        }else{
-            if($pagina_atual[-1] == '/'){
-                $pagina_atual = substr($pagina_atual, 0, -1);
-            }
-        }
-        /* se página for um formulário incluir o script de processamento de formulários
-         *  - Processa formulários e devolve erros/mensagems */
-        if(($pagina_atual == 'login' || $pagina_atual == 'register') && isset($_POST['submit'])){
-            include "includes/sistema/process.inc.php";
-        }
-        if($pagina_atual == "logout"){
-            //include_once "includes/sistema/logout.inc.php";
-            session_unset();
-            session_destroy();
-            header("location:".SITE_ROOT);
-            exit();
-        }
-    }else{
-        $pagina_atual = 'home';
-    }
     include_once "includes/sistema/funcoes.inc.php";
+    $paginas = ["home", "login", "register", "logout", "recover", "reset", "about", "blog"];
+
+    //array com categorias e página do site a partir do get
+    $urlList = manageUrl();
+    $pagina_atual = $urlList[0];
+
+    /* se página for um formulário e existir um POST->submit
+     * incluir o script de processamento de formulários
+     * - Processa formulários e devolve erros/mensagems
+     * */
+    if((
+        $pagina_atual == 'login' ||
+        $pagina_atual == 'register' ||
+        $pagina_atual == 'recover' ||
+        $pagina_atual == 'reset'
+        )
+        && isset($_POST['submit'])
+    )
+    {
+        include "includes/sistema/process.inc.php";
+    }
+    /* Logout */
+    if($pagina_atual == "logout"){
+
+        session_unset();
+        session_destroy();
+        header("location:".SITE_ROOT);
+    }
 
     /* cabeçalho HTML */
     include_once "includes/html/head.php";
@@ -46,5 +49,5 @@
 ?>
     </div>
 <?php
-    /* Terminação HTML */
+    /* Terminação HTML/JS */
     include_once "includes/html/foot.php";

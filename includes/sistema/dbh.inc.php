@@ -38,6 +38,7 @@ function createUser($conn, $username, $email, $password): void{
         exit();
     }
 
+    /* encriptar password */
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     mysqli_stmt_bind_param($stmt, "ssss", $email, $username, $hashedPassword, $userlevel);

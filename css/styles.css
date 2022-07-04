@@ -35,7 +35,8 @@ nav{
     background-color: #333;
 }
 .wrapper{
-    display: block;
+    display: grid;
+    flex-direction: column;
     box-sizing: border-box;
     width:80%;
     margin: 0 auto;
@@ -45,6 +46,7 @@ nav{
 
 nav .wrapper{
     display: flex;
+    flex-direction: row;
     align-items: stretch;
     background-color: #333;
     padding: 0;
@@ -115,8 +117,10 @@ nav .wrapper{
 }
 /* FORMULARIOS */
 .login{
-    width: 320px;
+    display: block;
     margin: 0 auto;
+    align-self: center;
+    justify-self: center;
     padding: 10px 20px;
     background-color: #aaa;
 }

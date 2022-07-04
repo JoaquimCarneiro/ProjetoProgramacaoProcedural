@@ -16,6 +16,7 @@
                     menu_link($pagina_atual, "Sair", "logout");
                 }else{
                     menu_link($pagina_atual, "Registar", "register");
+                    menu_link($pagina_atual, "Recuperar", "recover");
                     menu_link($pagina_atual, "Entrar", "login");
                 }
                 ?>

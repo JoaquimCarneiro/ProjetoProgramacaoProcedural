@@ -15,6 +15,16 @@ CREATE TABLE user_level(
     discription varchar(128)
 );
 
+-- Tokens
+DROP TABLE IF EXISTS tokens;
+CREATE TABLE tokens(
+    tokenId int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email varchar(128) NOT NULL,
+    tokenSelector TEXT NOT NULL,
+    token LONGTEXT NOT NULL,
+    expires TEXT NOT NULL
+);
+
 -- ligação de tabelas
 ALTER TABLE users
     ADD CONSTRAINT userlevel_users FOREIGN KEY (userlevel) REFERENCES user_level (userlevel);

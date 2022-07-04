@@ -13,6 +13,21 @@ function menu_link($pagina_atual, $nome, $link): void{
     echo "</li>";
 }
 
+/* gerir url */
+function manageUrl():array{
+
+    if (empty($_GET['pag'])){
+        $paginas[] = 'home';
+    }else{
+        $url = $_GET['pag'];
+        if(substr($url, -1) == '/'){
+            $url = substr($url, 0, -1);
+        }
+        $paginas = explode('/', $url);
+    }
+    return $paginas;
+}
+
 function debug($activo, $vars){
     if($activo){
         echo "<pre>";
