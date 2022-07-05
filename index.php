@@ -3,7 +3,7 @@
     session_start();
     require_once "includes/sistema/constants.inc.php";
     include_once "includes/sistema/funcoes.inc.php";
-    $paginas = ["home", "login", "register", "recover", "reset", "confirm", "logout", "about", "blog"];
+    $paginas = ["home", "login", "register", "recover", "reset", "confirm", "logout", "about", "blog", "perfil"];
 
     //array com categorias e página do site a partir do get
     $urlList = manageUrl();

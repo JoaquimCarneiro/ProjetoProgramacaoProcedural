@@ -7,7 +7,7 @@ body{
     font-weight: 300;
     font-size: 14px;
 }
-
+/************************* GERAIS *************************/
 h1, h2, h3{
     padding: 20px 0 10px;
     font-weight: 900;
@@ -22,16 +22,17 @@ p{
     padding: 10px;
 }
 
+td{
+    padding: 5px 10px;
+}
+
+/************************* LAYOUT *************************/
 .contentor{
     min-height: 100%;
     display: grid;
     grid-template-rows: 52px auto 120px;
 }
 .site_footer{
-    background-color: #333;
-}
-nav{
-    width: 100%;
     background-color: #333;
 }
 .wrapper{
@@ -44,6 +45,12 @@ nav{
     padding: 20px;
 }
 
+/************************* NAVEGAÇÃO *************************/
+nav{
+    width: 100%;
+    background-color: #333;
+}
+
 nav .wrapper{
     display: flex;
     flex-direction: row;
@@ -51,6 +58,7 @@ nav .wrapper{
     background-color: #333;
     padding: 0;
 }
+
 .logo{
     display: flex;
     flex-direction: row;
@@ -71,6 +79,7 @@ nav .wrapper{
     stroke: red !important;
 }*/
 
+/************************* MENU *************************/
 .menu{
     flex-grow: 1; /* relativo a nav .wrapper */
     display: flex;
@@ -100,7 +109,7 @@ nav .wrapper{
 .menu .link:hover{
     background-color: #666;
 }
-
+/************************* INDEX *************************/
 .index-categories-lists{
     display: flex;
     gap: 10px;
@@ -115,7 +124,7 @@ nav .wrapper{
     background-color: #333;
     color: #cccccc;
 }
-/* FORMULARIOS */
+/************************* FORMULARIOS *************************/
 .login{
     display: block;
     margin: 0 auto;
@@ -154,3 +163,19 @@ nav .wrapper{
 .lista_erros li{
     margin: 5px 0;
 }
+
+/************************* perfil *************************/
+.perfil tbody td{
+    border: 1px solid #dddddd;
+}
+
+.perfil thead tr:first-child{
+    font-weight: bold;
+    background-color: darkorange;
+    color: white;
+}
+
+.perfil tbody tr:nth-child(even){
+    background-color: #aaa;
+}
+

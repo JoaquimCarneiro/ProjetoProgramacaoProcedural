@@ -1,1 +1,1 @@
-console.log("yellow")
+console.log("yellow");
