@@ -120,3 +120,23 @@ function updateLvlByEmail($conn, $lvl, $email){
         mysqli_stmt_execute($stmt);
     }
 }
+
+/**/
+function getUserLvl($conn, $userlvl){
+    $sql = "SELECT * FROM user_level WHERE userlevel = ? ;"; //expires não necessita de ? pode-se usar a variavel diretamente
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        // precisa de melhor formato de erro
+        return ['erro' => "erro a preparar a query INSERT"];
+    }else{
+        mysqli_stmt_bind_param($stmt, "s", $userlvl);
+        mysqli_stmt_execute($stmt);
+
+        $resultado = mysqli_stmt_get_result($stmt);
+        if(!$row = mysqli_fetch_assoc($resultado)) {//não ha registo ou a data é inválida
+            return ['erro' => "Pedido inválido ou expirado"];
+        }else{
+            return $row;
+        }
+    }
+}

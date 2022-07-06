@@ -1,8 +1,6 @@
 <?php
 require_once "dbh.inc.php";
-
 require_once "process_funcoes.inc.php";
-
 
 $error_msg = [];
 $num_error = 0;

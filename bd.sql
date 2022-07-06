@@ -6,6 +6,13 @@ CREATE TABLE users (
     usersPwd varchar(128) NOT NULL,
     userlevel int(11) NOT NULL,
 );
+-- tabela para os níveis de utilizador
+DROP TABLE IF EXISTS user_info;
+CREATE TABLE user_info(
+    usersId int(11) PRIMARY KEY NOT NULL,
+    fistName varchar(128),
+    lastName varchar(128)
+);
 
 -- tabela para os níveis de utilizador
 DROP TABLE IF EXISTS user_level;

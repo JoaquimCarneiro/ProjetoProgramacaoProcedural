@@ -14,6 +14,9 @@
                 if (isset($_SESSION['userId'])){
                     menu_link($pagina_atual, "Perfil", "perfil");
                     menu_link($pagina_atual, "Sair", "logout");
+                    if($_SESSION['userLvl'] == 9){
+                        menu_link($pagina_atual, "Admin", "admin");
+                    }
                 }else{
                     menu_link($pagina_atual, "Registar", "register");
                     menu_link($pagina_atual, "Recuperar", "recover");

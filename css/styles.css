@@ -42,7 +42,7 @@ td{
     width:80%;
     margin: 0 auto;
     background-color: #ccc;
-    padding: 20px;
+    /*padding: 20px;*/
 }
 
 /************************* NAVEGAÇÃO *************************/
@@ -163,19 +163,37 @@ nav .wrapper{
 .lista_erros li{
     margin: 5px 0;
 }
-
-/************************* perfil *************************/
-.perfil tbody td{
-    border: 1px solid #dddddd;
+/************************* PAGINAS *************************/
+.contentor-pag{
+    display: flex;
 }
-
+.contentor-pag aside{
+    padding: 0 20px;
+    background-color: #666666;
+}
+.contentor-pag .conteudo{
+    padding: 0 20px;
+}
+/************************* PERFIL *************************/
 .perfil thead tr:first-child{
+    padding: 20px;
     font-weight: bold;
     background-color: darkorange;
     color: white;
+}
+.perfil thead td{
+    padding: 10px;
+}
+.perfil tbody td{
+    border: 1px solid #ddd;
+}
+.perfil tbody td p{
+    padding: 5px 0;
 }
 
 .perfil tbody tr:nth-child(even){
     background-color: #aaa;
 }
+
+
 

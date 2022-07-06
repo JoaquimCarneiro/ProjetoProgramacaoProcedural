@@ -12,7 +12,7 @@
     <p><?php if(isset($message)){
             echo $message;
         } ?></p>
-    <p><?php debug(false, $_SESSION); ?></p>
+    <p><?php debug(true, $_SESSION); ?></p>
     <?php
         if(isset($mensagens)){print_r($mensagens);}
         if(isset($error_msg)){print_r($error_msg);}
@@ -25,6 +25,6 @@
         <li><h3>Banana</h3></li>
         <li><h3>Bimbo</h3></li>
         <li><h3>Miau</h3></li>
-        <li><h3>fluff</h3></li>
+        <li><h3>Fluff</h3></li>
     </ul>
 </section>
