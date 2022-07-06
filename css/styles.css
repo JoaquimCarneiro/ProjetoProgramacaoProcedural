@@ -196,8 +196,8 @@ nav .wrapper{
 }
 .menu-perfil a, .menu-perfil .activelink, .menu-perfil .menu-separador{
     display: block;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 5px 10px;
+    margin: 3px 0;
     background-color: #333333;
     color: #dddddd;
     border: 1px solid #999;
@@ -205,10 +205,11 @@ nav .wrapper{
 .menu-perfil .activelink, .menu-perfil a:hover{
     background-color: darkorange;
     color: #333333;
-    border: 1px solid #333;
+    border: 1px solid #ddd;
 }
 .menu-perfil .menu-separador{
     padding: 5px 10px;
+    margin: 15px 0 3px;
     border: none;
     background-color: #999999;
     color: #333;
