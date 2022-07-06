@@ -4,8 +4,14 @@
  * passando a ser uma etiqueta do tipo span, quando é, por exemplo, uma ligação ativa.
  * */
 function menu_link($pagina_atual, $nome, $link): void{
+    if (strpos($link, "/")){
+        $templink = explode("/", $link);
+        $templink = end($templink);
+    }else{
+        $templink = $link;
+    }
     echo "<li>";
-    if($pagina_atual == $link){
+    if($pagina_atual == $templink){
         echo "<span class='activelink'>$nome</span>";
     }else{
         echo "<a class='link' href='/".$link."/'>$nome</a>";

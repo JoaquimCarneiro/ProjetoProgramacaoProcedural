@@ -11,7 +11,9 @@ DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info(
     usersId int(11) PRIMARY KEY NOT NULL,
     fistName varchar(128),
-    lastName varchar(128)
+    lastName varchar(128),
+    nacionalidade varchar(128),
+    genero varchar(128)
 );
 
 -- tabela para os níveis de utilizador
@@ -36,6 +38,9 @@ CREATE TABLE tokens(
 -- ligação de tabelas
 ALTER TABLE users
     ADD CONSTRAINT userlevel_users FOREIGN KEY (userlevel) REFERENCES user_level (userlevel);
+
+ALTER TABLE user_info
+    ADD CONSTRAINT userinfo_users FOREIGN KEY (usersId) REFERENCES users (usersId) ON DELETE CASCADE;
 
 -- Inserir valores defeito
 INSERT INTO user_level

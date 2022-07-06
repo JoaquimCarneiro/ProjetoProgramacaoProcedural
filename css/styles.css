@@ -168,7 +168,7 @@ nav .wrapper{
     display: flex;
 }
 .contentor-pag aside{
-    padding: 0 20px;
+    padding: 0 10px;
     background-color: #666666;
 }
 .contentor-pag .conteudo{
@@ -194,6 +194,29 @@ nav .wrapper{
 .perfil tbody tr:nth-child(even){
     background-color: #aaa;
 }
+.menu-perfil a, .menu-perfil .activelink, .menu-perfil .menu-separador{
+    display: block;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #333333;
+    color: #dddddd;
+    border: 1px solid #999;
+}
+.menu-perfil .activelink, .menu-perfil a:hover{
+    background-color: darkorange;
+    color: #333333;
+    border: 1px solid #333;
+}
+.menu-perfil .menu-separador{
+    padding: 5px 10px;
+    border: none;
+    background-color: #999999;
+    color: #333;
+    border-bottom: 5px solid darkorange;
+}
 
-
+/************************* HOME *************************/
+.contentor-home{
+    padding: 10px;
+}
 
