@@ -22,9 +22,9 @@ if(isset($_SESSION['userLvl'])){
 
         //echo $pagina_atual;
         //echo $urlList[0];
-        /*echo "<pre>";
-        print_r($userlvl_info);
-        echo "</pre>";*/
+        echo "<pre>";
+        print_r($_POST);
+        echo "</pre>";
 ?>
         <div class="contentor-pag">
         <aside>

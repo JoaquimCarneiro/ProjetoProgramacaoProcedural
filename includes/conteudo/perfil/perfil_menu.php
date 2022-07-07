@@ -1,4 +1,4 @@
-<h3>Menu</h3>
+<h3>Perfil de Utilizador</h3>
 <ul class="menu-perfil">
     <?php
         if (isset($urlList[1])){

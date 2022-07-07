@@ -9,6 +9,8 @@
              * ou apagadas completamente do sistema para que isto não se torne confuso e
              * para que não seja necessário abrir uma tag PHP só para fazer um comentário estupido...
              ******************************************************************************************/
+
+
         ?>
         <p><?php if(isset($message)){
                 echo $message;

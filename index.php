@@ -3,6 +3,7 @@
     session_start();
     require_once "includes/sistema/constants.inc.php";
     include_once "includes/sistema/funcoes.inc.php";
+    require_once "includes/sistema/dbh.inc.php";
     $paginas = ["home", "login", "register", "recover", "reset", "confirm", "logout", "about", "blog", "perfil"];
 
     //array com categorias e página do site a partir do get

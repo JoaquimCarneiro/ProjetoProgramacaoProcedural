@@ -125,7 +125,7 @@ nav .wrapper{
     color: #cccccc;
 }
 /************************* FORMULARIOS *************************/
-.login{
+.login, .perfil{
     display: block;
     margin: 0 auto;
     align-self: center;
@@ -143,6 +143,9 @@ nav .wrapper{
 .input_field label{
     text-align: right;
     flex-grow: 1;
+}
+.input_field input{
+    width: 150px;
 }
 
 .submit{
@@ -175,23 +178,27 @@ nav .wrapper{
     padding: 0 20px;
 }
 /************************* PERFIL *************************/
-.perfil thead tr:first-child{
+aside h3{
+    color: #dddddd;
+    padding: 20px 10px 10px;
+}
+.table_perfil thead tr:first-child{
     padding: 20px;
     font-weight: bold;
     background-color: darkorange;
     color: white;
 }
-.perfil thead td{
+.table_perfil thead td{
     padding: 10px;
 }
-.perfil tbody td{
+.table_perfil tbody td{
     border: 1px solid #ddd;
 }
-.perfil tbody td p{
+.table_perfil tbody td p{
     padding: 5px 0;
 }
 
-.perfil tbody tr:nth-child(even){
+.table_perfil tbody tr:nth-child(even){
     background-color: #aaa;
 }
 .menu-perfil a, .menu-perfil .activelink, .menu-perfil .menu-separador{

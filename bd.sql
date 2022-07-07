@@ -12,7 +12,7 @@ CREATE TABLE user_info(
     usersId int(11) PRIMARY KEY NOT NULL,
     fistName varchar(128),
     lastName varchar(128),
-    nacionalidade varchar(128),
+    nacionalidade varchar(2),
     genero varchar(128)
 );
 
@@ -41,6 +41,9 @@ ALTER TABLE users
 
 ALTER TABLE user_info
     ADD CONSTRAINT userinfo_users FOREIGN KEY (usersId) REFERENCES users (usersId) ON DELETE CASCADE;
+
+ALTER TABLE user_info
+    ADD CONSTRAINT userinfo_nacionalidade FOREIGN KEY (nacionalidade) REFERENCES paises (Code);
 
 -- Inserir valores defeito
 INSERT INTO user_level

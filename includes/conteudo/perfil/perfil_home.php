@@ -2,7 +2,7 @@
     <div class="conteudo">
         <h2>Area de utilizador</h2>
         <h3>Benvindo, <?php echo $username; ?></h3>
-        <table class="perfil">
+        <table class="table_perfil">
             <thead>
             <tr><td colspan='2'>Dados de login</td></tr>
             </thead>

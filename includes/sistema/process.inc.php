@@ -2,7 +2,7 @@
     if (isset($_POST['submit'])){
         //echo $_POST['submit'];
 
-        require_once "dbh.inc.php";
+        //require_once "dbh.inc.php";
         //require_once "funcoes.inc.php";
         require_once "process_funcoes.inc.php";
         require_once "mailer.inc.php";
