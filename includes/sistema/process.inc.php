@@ -37,6 +37,37 @@
             /* urlList vem do index*/
             $form_error = processReset($conn, $password, $password_confirm, $urlList);
 
+        }else if($_POST['submit'] == 'editlogin') {
+            // campos do formulário
+            echo "editLogin<br>";
+            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";
+            exit();
+        }else if($_POST['submit'] == 'editlogin_pwd') {
+            // campos do formulário
+            echo "editLogin_pwd<br>";
+            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";
+            exit();
+        }else if($_POST['submit'] == 'editinfo') {
+            echo "editinfo<br>";
+            // campos do formulário
+            echo "<pre>";
+            print_r($_POST);
+            echo "</pre>";
+            exit();
+        }else if($_POST['submit'] == 'editfoto') {
+            echo "editinfo<br>";
+            // campos do formulário
+            echo "<pre>";
+            print_r($_POST);
+            $file = $_FILES['file'];
+            echo "file Array<br>";
+            print_r($file);
+            echo "</pre>";
+            exit();
         }else{
             header("location: ".SITE_ROOT."?error=illegalaccess");
         }

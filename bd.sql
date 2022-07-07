@@ -4,7 +4,7 @@ CREATE TABLE users (
     usersEmail varchar(128) NOT NULL,
     usersUid varchar(128) NOT NULL,
     usersPwd varchar(128) NOT NULL,
-    userlevel int(11) NOT NULL,
+    userlevel int(11) NOT NULL
 );
 -- tabela para os níveis de utilizador
 DROP TABLE IF EXISTS user_info;
@@ -33,6 +33,12 @@ CREATE TABLE tokens(
     token LONGTEXT NOT NULL,
     expires TEXT NOT NULL,
     type varchar(128) NOT NULL
+);
+
+DROP TABLE IF EXISTS paises;
+CREATE TABLE paises (
+    Name varchar(64) NOT NULL,
+    Code varchar(2) PRIMARY KEY NOT NULL
 );
 
 -- ligação de tabelas

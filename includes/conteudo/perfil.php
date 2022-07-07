@@ -7,7 +7,6 @@ if(isset($_SESSION['userLvl'])){
     if(!$utilizador = uidExists($conn,$sessionUid, $sessionUid)){
         echo "fail";
     }else{
-
         /* variáveis de dados do utilizador para login */
         $userid = $utilizador['usersId'];
         $username = $utilizador['usersUid'];
@@ -22,13 +21,12 @@ if(isset($_SESSION['userLvl'])){
 
         //echo $pagina_atual;
         //echo $urlList[0];
-        echo "<pre>";
+        /*echo "<pre>";
         print_r($_POST);
-        echo "</pre>";
+        echo "</pre>";*/
 ?>
         <div class="contentor-pag">
         <aside>
-
             <?php include "perfil/perfil_menu.php"; ?>
         </aside>
 <?php

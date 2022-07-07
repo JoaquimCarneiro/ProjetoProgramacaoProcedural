@@ -1,10 +1,3 @@
-DROP TABLE IF EXISTS paises;
-CREATE TABLE paises (
-    Name varchar(64) NOT NULL,
-    Code varchar(2) PRIMARY KEY NOT NULL
-);
-
-
 INSERT INTO paises
     (Name, Code)
 VALUES

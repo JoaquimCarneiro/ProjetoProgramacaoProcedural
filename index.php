@@ -4,7 +4,7 @@
     require_once "includes/sistema/constants.inc.php";
     include_once "includes/sistema/funcoes.inc.php";
     require_once "includes/sistema/dbh.inc.php";
-    $paginas = ["home", "login", "register", "recover", "reset", "confirm", "logout", "about", "blog", "perfil"];
+    $paginas = ["home", "login", "register", "recover", "reset", "confirm", "logout", "about", "blog", "perfil", "admin"];
 
     //array com categorias e página do site a partir do get
     $urlList = manageUrl();
@@ -14,13 +14,13 @@
      * incluir o script de processamento de formulários
      * - Processa formulários e devolve erros/mensagems
      * */
-    if((
+    if(/*(*
         $pagina_atual == 'login' ||
         $pagina_atual == 'register' ||
         $pagina_atual == 'recover' ||
         $pagina_atual == 'reset'
         )
-        && isset($_POST['submit'])
+        &&*/ isset($_POST['submit'])
     )
     {
         include "includes/sistema/process.inc.php";
