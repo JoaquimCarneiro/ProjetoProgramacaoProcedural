@@ -14,15 +14,7 @@
      * incluir o script de processamento de formulários
      * - Processa formulários e devolve erros/mensagems
      * */
-    if(/*(*
-        $pagina_atual == 'login' ||
-        $pagina_atual == 'register' ||
-        $pagina_atual == 'recover' ||
-        $pagina_atual == 'reset'
-        )
-        &&*/ isset($_POST['submit'])
-    )
-    {
+    if(isset($_POST['submit'])){
         include "includes/sistema/process.inc.php";
     }
     /* Logout */

@@ -355,7 +355,6 @@ function invalidUid($username): bool{
         $result = false;
     }
     return $result;
-
 }
 
 function invalidEmail($email): bool{

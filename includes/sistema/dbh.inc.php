@@ -109,6 +109,19 @@ function updatePwdByEmail($conn, $password, $email){
     }
 }
 
+function updatePwdByUid($conn, $password, $userUid){
+    $sql = "UPDATE users SET usersPwd = ? WHERE usersUid = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        // precisa de melhor formato de erro
+        return ["erro" => "erro a preparar a query modifica password"];
+    }else {
+        $newPassword = password_hash($password, PASSWORD_DEFAULT);
+        mysqli_stmt_bind_param($stmt, "ss", $newPassword, $userUid);
+        mysqli_stmt_execute($stmt);
+    }
+}
+
 function updateLvlByEmail($conn, $lvl, $email){
     $sql = "UPDATE users SET userlevel = ? WHERE usersEmail = ?";
     $stmt = mysqli_stmt_init($conn);
@@ -121,7 +134,9 @@ function updateLvlByEmail($conn, $lvl, $email){
     }
 }
 
-/**/
+/* Devolve um erro, sob a forma de um array, ou os campos da tabela de nível de utilizadores e as devidas descrições
+ * na base de dados a partir do nível de utilizador na base de dados.
+ * a ser usado para ir buscar o nome do nível e a descrição */
 function getUserLvl($conn, $userlvl){
     $sql = "SELECT * FROM user_level WHERE userlevel = ? ;"; //expires não necessita de ? pode-se usar a variavel diretamente
     $stmt = mysqli_stmt_init($conn);
@@ -138,5 +153,64 @@ function getUserLvl($conn, $userlvl){
         }else{
             return $row;
         }
+    }
+}
+/***** Informações de perfil do utilizador *****/
+/* Procura se o utilizador já adicionou info à base de dados e se tiver devolve array com dados
+ * - usado para multiplos efeitos */
+
+function getUserInfo($conn, $userId){
+    $sql = "SELECT * FROM user_info WHERE usersId = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)){
+        return ['erro' => "erro a preparar a query SELECT"];
+        //header("location: ".SITE_ROOT."?error=stmtfailed");
+    }
+    mysqli_stmt_bind_param($stmt, "s", $userId);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    if(!$row = mysqli_fetch_assoc($resultData)){
+        return false;
+    }else{
+        return $row;
+    }
+}
+
+function setUpdateUserInfo($conn, $userId, $nome, $sobreNome, $aniversario, $nacionalidade, $genero){
+    $infoExists = getUserInfo($conn, $userId);
+    // build querys
+    if(!$infoExists){//não existe info
+        $query = "INSERT INTO user_info 
+                            (usersId, firstName, lastName, aniversario, nacionalidade, genero)
+                            VALUES (?, ?, ?, ?, ?, ?);";
+    }else{
+        $query = "UPDATE user_info SET 
+                            firstName = ?, lastName = ?, aniversario = ?, nacionalidade = ?, genero = ? WHERE usersId = ?;";
+    }
+    //executa
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $query)){
+        return ['erro' => "erro a preparar a query SELECT"];
+        //header("location: ".SITE_ROOT."?error=stmtfailed");
+    }
+    if(!$infoExists){
+        mysqli_stmt_bind_param($stmt, "ssssss", $userId, $nome, $sobreNome, $aniversario, $nacionalidade, $genero);
+    }else{
+        mysqli_stmt_bind_param($stmt, "ssssss", $nome, $sobreNome, $aniversario, $nacionalidade, $genero, $userId);
+    }
+    mysqli_stmt_execute($stmt);
+}
+
+function updateUsenameById($conn, $utilizador, $userId){
+    $sql = "UPDATE users SET usersUid = ? WHERE usersId = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        // precisa de melhor formato de erro
+        return ["erro" => "erro a preparar a query modifica password"];
+    }else {
+
+        mysqli_stmt_bind_param($stmt, "ss", $utilizador, $userId);
+        mysqli_stmt_execute($stmt);
     }
 }

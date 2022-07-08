@@ -10,8 +10,9 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info(
     usersId int(11) PRIMARY KEY NOT NULL,
-    fistName varchar(128),
+    firstName varchar(128),
     lastName varchar(128),
+    aniversario date,
     nacionalidade varchar(2),
     genero varchar(128)
 );
@@ -58,4 +59,4 @@ VALUES
     (0, "convidado", "Nível inicial - convidado não registado"),
     (1, "registado", "Utilizador registado não confirmado"),
     (2, "verificado", "Utilizador registado e confirmado"),
-    (9, "administrador", "Nível de administrador máximo");
+    (9, "administrador", "Administrador de nível máximo");

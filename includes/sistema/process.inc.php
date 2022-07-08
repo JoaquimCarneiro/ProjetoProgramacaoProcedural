@@ -38,25 +38,108 @@
             $form_error = processReset($conn, $password, $password_confirm, $urlList);
 
         }else if($_POST['submit'] == 'editlogin') {
-            // campos do formulário
-            echo "editLogin<br>";
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
-            exit();
+            $form_error = [];
+            $num_error = 0;
+
+            // campos do formulário e session
+            $utilizador = $_POST['nomeUtilizador'];
+            $userId = $_SESSION['userId'];
+
+            if(empty($utilizador)){
+                $form_error['username'] = "Utilizador obrigatório";
+                $num_error ++;
+            }else{
+                if(invalidUid($utilizador)){
+                    $form_error['username'] = "Formato de utilizador inválido";
+                    $num_error ++;
+                }
+            }
+
+            if($num_error != 0){
+                $form_error['num_error'] = $num_error;
+                //return $form_error;
+            }else{
+                if (uidExists($conn, $utilizador, $utilizador) !== false){
+                    $form_error['username'] = "Utilizador já existe";
+                    $num_error ++;
+
+                }else{
+                    updateUsenameById($conn, $utilizador, $userId);
+                    $_SESSION['userUid'] = $utilizador;
+                    header("location: /perfil/");
+                }
+            }
+
+            $form_error['num_error'] = $num_error;
+            $form_error['form'] = "editlogin";
+            //return $form_error;
         }else if($_POST['submit'] == 'editlogin_pwd') {
-            // campos do formulário
-            echo "editLogin_pwd<br>";
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
+            $form_error = [];
+            $num_error = 0;
+
+            $oldpassword = $_POST['oldpassword'];
+            $novaPassword = $_POST['nova_password'];
+            $password_confirm = $_POST['password_confirm'];
+            $userUid = $_SESSION['userUid'];
+
+            if(empty($oldpassword)){
+                $form_error['password'] = "Password antiga obrigatória";
+                $num_error ++;
+            }
+            if(empty($novaPassword)){
+                $form_error['novapassword'] = "Password nova obrigatória";
+                $num_error ++;
+            }
+            if(empty($password_confirm)){
+                $form_error['passwordconfirm'] = "Password de confirmação obrigatória";
+                $num_error ++;
+            }
+            if($num_error == 0){
+                $row = uidExists($conn, $userUid, $userUid);
+                if($row ==! false){
+                    /* verifica password antiga */
+                    //$hashedPassword = password_verify($password, $pwdHashed);
+                    if(password_verify($oldpassword, $row['usersPwd'])){//passwords antiga confirma-se
+                        if (pwdMatch($novaPassword, $password_confirm)){// nova password e confirmação falhou
+                            $form_error['password_confirmation'] = "Confirmação de nova password falhou";
+                            $num_error ++;
+                        }else{
+                            updatePwdByUid($conn, $novaPassword, $userUid);
+                            header("location: /perfil/");
+                        }
+                    }else{
+                        $form_error['password'] = "Password antiga errada";
+                        $num_error ++;
+                    }
+
+                    print_r($row);
+                }else{
+                    $form_error['baduser'] = "User/session Error";
+                }
+            }
+
+            $form_error['num_error'] = $num_error;
+            $form_error['form'] = "editlogin_pwd";
+            //return $form_error;
             exit();
         }else if($_POST['submit'] == 'editinfo') {
-            echo "editinfo<br>";
-            // campos do formulário
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
+            //check if user has info in the table
+            $userId = $_SESSION['userId'];
+
+            /***** Gerir variaveis post - Faltam todo o tipo de verificações ******/
+
+            $nome = $_POST['nome'];
+            $sobreNome = $_POST['sobrenome'];
+            /* Tipos de Dados MYSQL do tipo DATA tem que ter o formato específico ou NULL senão a query falha
+             * este if pode ser substituido por um operador ternario: $result = condition ? value1 : value2; */
+            $aniversario = !$_POST['nascimento'] ? NULL : $_POST['nascimento'];
+            //if(!$_POST['nascimento']){ $aniversario = NULL;}else{$aniversario = $_POST['nascimento'];}
+            $nacionalidade = !$_POST['nacionalidade'] ? NULL : $_POST['nacionalidade'];
+            $genero = $_POST['genero'];
+
+            setUpdateUserInfo($conn, $userId, $nome, $sobreNome, $aniversario, $nacionalidade, $genero);
+            header("location: /perfil/");
+
             exit();
         }else if($_POST['submit'] == 'editfoto') {
             echo "editinfo<br>";

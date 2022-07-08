@@ -1,6 +1,5 @@
 <div class="perfil">
-    <h2>Alterar foto de perfil</h2>
-    <h3>Nome de utilizador</h3>
+    <h3>Alterar foto de perfil</h3>
     <form action="/perfil/editlogin/" method="post" enctype="multipart/form-data">
         <fieldset class="input_field">
             <label for="file">Imagem</label>

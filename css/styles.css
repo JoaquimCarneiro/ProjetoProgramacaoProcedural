@@ -120,35 +120,46 @@ nav .wrapper{
     width: 25%;
     align-items: center;
     justify-content: center;
-
     background-color: #333;
     color: #cccccc;
 }
 /************************* FORMULARIOS *************************/
 .login, .perfil{
-    display: block;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
     align-self: center;
     justify-self: center;
     padding: 10px 20px;
     background-color: #aaa;
+
+}
+.login h3, .perfil h3{
+    padding: 10px;
 }
 .input_field, fieldset{
     display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
     margin: 10px 0;
 }
 .input_field label{
-    text-align: right;
+    align-self: self-start;
+    /*text-align: right;*/
+    font-weight: normal;
     flex-grow: 1;
 }
 .input_field input{
+    padding:  10px;
     width: 150px;
+    border: none;
+    border-radius: 5px;
 }
 
 .submit{
+    align-self: self-end;
     border: none;
     padding: 7px 10px;
     cursor: pointer;
@@ -166,6 +177,16 @@ nav .wrapper{
 .lista_erros li{
     margin: 5px 0;
 }
+
+form{
+    display: inline-flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    padding: 10px 20px;
+    margin: 10px auto;
+    background-color: #bbb;
+}
 /************************* PAGINAS *************************/
 .contentor-pag{
     display: flex;
@@ -177,10 +198,18 @@ nav .wrapper{
 .contentor-pag .conteudo{
     padding: 0 20px;
 }
+.contentor-pag main{
+    margin: 0 auto;
+    padding: 0 10px;
+
+}
 /************************* PERFIL *************************/
 aside h3{
     color: #dddddd;
     padding: 20px 10px 10px;
+}
+.table_perfil{
+    margin: 10px 0 20px;
 }
 .table_perfil thead tr:first-child{
     padding: 20px;

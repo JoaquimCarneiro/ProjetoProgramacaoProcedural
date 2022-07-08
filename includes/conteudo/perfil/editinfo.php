@@ -1,41 +1,67 @@
+<?php
+    /***** VERIFICAR SE O UTILIZADOR JÁ TEM INFORMAÇÕES E BUSCAR DADOS*****/
+    $userId = $_SESSION['userId'];
+    $userInfo = getUserInfo($conn, $userId);
+    if($userInfo){
+        $nome = $userInfo['firstName'];
+        $sobreNome = $userInfo['lastName'];
+        $aniversario = $userInfo['aniversario'];
+        $nacionalidade = $userInfo['nacionalidade'];
+        $genero = $userInfo['genero'];
+    }
+?>
 <div class="perfil">
-    <h2>Alterar Informação de perfil</h2>
+    <h3>Alterar Informação de perfil</h3>
     <form action="/perfil/editinfo/" method="post">
         <fieldset class="input_field">
             <label for="nome">Nome</label>
             <input class=
                    ' <?php if(isset($form_error['nome'])) {echo " form_error";}?> '
                    type="text" id="nome" name="nome" placeholder="Nome" value=
-                   '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['nome'];}?>'>
+                   '<?php
+                        if(isset($form_error['originais'])) {echo $form_error['originais']['nome'];}
+                        else{if($userInfo){echo $nome;}}
+                   ?>'>
         </fieldset>
         <fieldset class="input_field">
             <label for="sobrenome">Sobrenome</label>
             <input class=
                    ' <?php if(isset($form_error['sobrenome'])) {echo " form_error";}?> '
                    type="text" id="sobrenome" name="sobrenome" placeholder="Sobrenome" value=
-                   '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['sobrenome'];}?>'>
+                   '<?php
+                        if(isset($form_error['originais'])) {echo $form_error['originais']['sobrenome'];}
+                        else{if($userInfo){echo $sobreNome;}}
+                    ?>'>
         </fieldset>
         <fieldset class="input_field">
             <label for="nascimento">Data de nascimento</label>
             <input class=
                    ' <?php if(isset($form_error['sobrenome'])) {echo " form_error";}?> '
                    type="date" id="nascimento" name="nascimento" value=
-                   '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['sobrenome'];}?>'>
+                   '<?php
+                        if(isset($form_error['originais'])) {echo $form_error['originais']['sobrenome'];}
+                        else{if($userInfo){echo $aniversario;}}
+                    ?>'>
         </fieldset>
         <fieldset class="input_field">
             <label for="nacionalidade">Nacionalidade</label>
             <input class=
                    ' <?php if(isset($form_error['nacionalidade'])) {echo " form_error";}?> '
                    type="text" id="nacionalidade" name="nacionalidade" placeholder="Nacionalidade" value=
-                   '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['nacionalidade'];}?>'>
+                   '<?php
+                        if(isset($form_error['originais'])) {echo $form_error['originais']['nacionalidade'];}
+                        else{if($userInfo){echo $nacionalidade;}}
+                    ?>'>
         </fieldset>
         <fieldset class="input_field">
             <label for="genero">Genero</label>
-            <input
-                class=
-                ' <?php if(isset($form_error['genero'])) {echo " form_error";}?> '
-                type="text" id="genero" name="genero" placeholder="Repetir palavra passe" value=
-                '<?php if(isset($form_error['originais'])) {echo $form_error['originais']['genero'];}?>'>
+            <input class=
+                    ' <?php if(isset($form_error['genero'])) {echo " form_error";}?> '
+                    type="text" id="genero" name="genero" placeholder="Repetir palavra passe" value=
+                    '<?php
+                        if(isset($form_error['originais'])) {echo $form_error['originais']['genero'];}
+                        else{if($userInfo){echo $genero;}}
+                    ?>'>
         </fieldset>
         <fieldset>
             <button class="submit" name="submit" value="editinfo">Alterar</button>
