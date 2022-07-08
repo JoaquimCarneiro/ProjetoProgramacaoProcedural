@@ -15,7 +15,7 @@
         <p><?php if(isset($message)){
                 echo $message;
             } ?></p>
-        <p><?php debug(true, $_SESSION); ?></p>
+        <p><?php debug(false, $_SESSION); ?></p>
         <?php
             if(isset($mensagens)){print_r($mensagens);}
             if(isset($error_msg)){print_r($error_msg);}
