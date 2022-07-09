@@ -4,7 +4,7 @@
 const SITE_TITLE = "LoginSys";
 const SITE_SUBTITLE = "Sistema de Login procedural";
 
-const SITE_ROOT = "http://loginsys.arg/";
+const SITE_ROOT = "http://www.loginsys.arg/";
 
 /* DATABASE CONSTANTS */
 
